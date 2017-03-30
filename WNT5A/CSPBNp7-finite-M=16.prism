@@ -47,8 +47,8 @@ endmodule
 
 module  BN2
 x2:[0..1];
-[csPBN]u=0->(x2'=f21);
-[csPBN]u=1->(x2'=1-x2);
+[csPBN]per2=0&u=0->(x2'=f21);
+[csPBN]per2=0&u=1->(x2'=1-x2);
 [csPBN]per2=1&x2=0->(x2'=1);
 [csPBN]per2=1&x2=1->(x2'=0);
 endmodule
