@@ -1,0 +1,170 @@
+//WNT5A
+dtmc
+formula   f11=(1-x6);
+//formula    f12=x1;
+
+formula    f21=((1-x2)*x4*x6)+(x2*(x4+x6-x4*x6))-((1-x2)*x4*x6)*(x2*(x4+x6-x4*x6));
+
+formula   f31=(1-x7);
+formula   f32=x3;
+
+formula   f41=x4;
+
+formula   f51=(1-x7)+x2-(1-x7)*x2;
+//formula   f52=x5;
+
+formula   f61=x3+x4-x3*x4;
+//formula   f62=x6;
+
+formula   f71=x7+(1-x2)-x7*(1-x2);
+formula   f72=x7;
+ 
+module  switch
+s:[0..1] ;
+[csPBN]true->0.1:(s'=1)+0.9:(s'=0);
+endmodule
+
+//WNT5A
+module  pert1
+per1:[0..1] ;
+[csPBN] true->0.8:(per1'=0)+0.2:(per1'=1);
+endmodule
+
+module  BN1
+x1:[0..1];
+//d1:[0..1];
+[csPBN]per1=0->(x1'=f11);
+[csPBN]per1=1&x1=0->(x1'=1);
+[csPBN]per1=1&x1=1->(x1'=0);
+endmodule
+
+//pirin
+module  pert2
+per2:[0..1] ;
+[csPBN] true->0.8:(per2'=0)+0.2:(per2'=1);
+endmodule
+
+module  BN2
+x2:[0..1];
+[csPBN]per2=0&u=0->(x2'=f21);
+[csPBN]per2=0&u=1->(x2'=1-x2);
+[csPBN]per2=1&x2=0->(x2'=1);
+[csPBN]per2=1&x2=1->(x2'=0);
+endmodule
+
+//S100p
+module  pert3
+per3:[0..1] ;
+[csPBN] true->0.8:(per3'=0)+0.2:(per3'=1);
+endmodule
+
+module  BN3
+x3:[0..1];
+d3:[0..1];
+[csPBN]s=1&per3=0->0.5:(x3'=f31)&(d3'=0)+0.5:(x3'=f32)&(d3'=1);
+[csPBN]s=0&per3=0&d3=0->(x3'=f31);
+[csPBN]s=0&per3=0&d3=1->(x3'=f32);
+[csPBN]per3=1&x3=1->(x3'=0);
+[csPBN]per3=1&x3=0->(x3'=1);
+endmodule
+
+//RET1
+module  pert4
+per4:[0..1] ;
+[csPBN]true->0.8:(per4'=0)+0.2:(per4'=1);
+endmodule
+
+module  BN4
+x4:[0..1];
+[csPBN]per4=0->(x4'=f41);
+[csPBN]per4=1&x4=1->(x4'=0);
+[csPBN]per4=1&x4=0->(x4'=1);
+endmodule
+
+//MART1
+module pert5
+per5:[0..1];
+[csPBN]true->0.8:(per5'=0)+0.2:(per5'=1);
+endmodule
+
+module BN5
+x5:[0..1];
+//d5:[0..1];
+[csPBN]per5=0->(x5'=f51);
+[csPBN]per5=1&x5=1->(x5'=0);
+[csPBN]per5=1&x5=0->(x5'=1);
+endmodule  
+
+//HADHB
+module pert6
+per6:[0..1];
+[csPBN]true->0.8:(per6'=0)+0.2:(per6'=1);
+endmodule                              
+
+module  BN6
+x6:[0..1];
+//d6:[0..1];
+[csPBN]per6=0->(x6'=f61);
+[csPBN]per6=1&x6=1->(x6'=0);
+[csPBN]per6=1&x6=0->(x6'=1);
+endmodule
+
+//STC2
+module pert7
+per7:[0..1];
+[csPBN]true->0.8:(per7'=0)+0.2:(per7'=1);
+endmodule
+
+module  BN7
+x7:[0..1];
+d7:[0..1];
+[csPBN]s=1&per7=0->0.7:(x7'=f71)&(d7'=0)+0.3:(x7'=f72)&(d7'=1);
+[csPBN]s=0&per7=0&d7=0->(x7'=f71);
+[csPBN]s=0&per7=0&d7=1->(x7'=f72);
+[csPBN]per7=1&x7=1->(x7'=0);
+[csPBN]per7=1&x7=0->(x7'=1);
+endmodule
+
+
+module  input
+u:[0..1];
+[csPBN]t=0->(u'=0);
+[csPBN]t=1->(u'=0);
+[csPBN]t=2->(u'=0);
+[csPBN]t=3->(u'=0);
+[csPBN]t=4->(u'=0);
+[csPBN]t=5->(u'=0);
+[csPBN]t=6->(u'=0);
+[csPBN]t=7->(u'=0);
+[csPBN]t=8->(u'=0);
+[csPBN]t=9->(u'=0);
+[csPBN]t=10->(u'=0);
+[csPBN]t=11->(u'=0);
+[csPBN]t=12->(u'=0);
+[csPBN]t=13->(u'=0);
+[csPBN]t=14->(u'=0);
+[csPBN]t=15->(u'=0);
+[csPBN]t=16->(u'=0);
+[csPBN]t=17->(u'=0);
+endmodule
+
+
+module  time
+t:[0..15];
+[csPBN]t<15->(t'=t+1);
+[csPBN]t=15->(t'=15);
+endmodule
+
+
+init
+s=0&x1=0&x2=1&x3=1&x4=0&x5=1&x6=1&x7=0&d3=0&d7=0&per1=0&per2=0&per3=0&per4=0&per5=0&per6=0&per7=0&u=0&t=0
+endinit
+
+rewards  "cost"
+(x1=0)&t=14:0;
+(x1=1)&t=14:5;
+u=1&t>=14:0;
+u=1:1;
+endrewards
+
+
